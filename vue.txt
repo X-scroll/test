@@ -1,0 +1,270 @@
+vue 
+定义：前端渐进式框架
+设计模式：mvvm     m=>model         v=>view        vm=>交互
+特点：
+双向数据绑定
+mvvm
+组建化
+
+
+vue
+
+1、指令  =>指令操作DOM    （directive)
+定义：带有v-的一种特殊的属性
+作用：操作DOM，进行渲染功能
+v-model：双向数据绑定  {{ }}插值表达式
+v-for  ：循环
+v-text  ：解析文本
+v-html  ：解析网页内容
+v-bind  : 动态绑定
+v-bind:class  ：动态绑定类名    简写方式=>:class=""
+    有三种：数组  对象  字符串
+v-bind:style   ：动态绑定样式
+v-bind:src      ：动态绑定路径
+v-bind:href    ：动态绑定路径	
+v-on  ：事件绑定   =>简写方式@click=""
+{
+v-if   :        控制DOM节点的显隐   特点：取值为布尔值    默认值为true    删除或添加DOM节点
+v-else-if
+v-else
+}
+v-show  ：控制显示隐藏 特点： 取值为布尔值    默认值为false   控制的时display   none和block之间的切换
+
+v-cloak  ：防止页面闪烁
+v-once  ：执行一次
+v-pre  ：原位输出
+
+2、事件
+a、普通事件：
+click
+mousemove
+mouseenter
+mouseover
+mouseout
+mouseleave
+mousedown
+mouseup
+dbclick
+
+事件修饰符
+.stop  ：阻止事件冒泡
+.prevent  ：阻止默认事件
+.native  ：绑定原生事件
+.once  ：执行一次
+keypress  :
+keydown  :
+keyup  :
+键盘修饰符
+enter
+tab
+上下左右 up down left right
+esc	
+作业：a、通过vue实现选项卡
+b、论坛功能
+c、网易严选
+
+
+3、生命周期  lifecycle   别名：钩子函数
+分为4阶段   8个状态
+创建
+beforeCreate()
+数据未进行绑定，同时未挂载数据
+created
+数据已经绑定，但是未挂载
+挂载
+beforeMount
+数据模板已经渲染完成，已经挂载到实例上，数据进行绑定，同时可以知道el挂载到的dom元素的名称
+mounted
+各种元素都已经加载完毕，可以执行各种操作
+更新
+beforeUpdate()
+数据模板进行重新渲染，data中的数据进行跟新
+updated()
+数据更新完毕
+销毁
+beforeDestroy()
+el：销毁实例   data：取消数据绑定   mse：删除msg的以有数据
+destroy
+销毁完毕。
+
+
+4、自定义指令（directive）
+全局自定义指令
+Vue.directive("go_red", function (el) {
+             el.style.background = "#f00"
+             console.log(arguments)
+        })
+ Vue.directive("debounce", {}）
+
+局部自定义指令
+  directives: {
+	“”：{}
+}
+
+5、自定义过滤器
+定义：对特定数据进行筛选
+全局过滤器
+ Vue.filter("",function(){})
+局部过滤器
+filters:{
+"":function(el){}
+}
+6、组件  component
+全局组件：
+父子通信: props           单向数据流
+自父通信:#emit
+兄弟通信:eventBus
+  传出用：vm.$emit(名字，数据)
+  接受用：vm.$on(名字，(val)=>{接受的变量=val}
+  )
+provide   inject
+
+vuex
+
+$attrs   不常用
+局部组件
+
+
+7、动画
+transition
+动画类名
+v-enter：初始状态	定义进入时过度的开始状态
+v-enter-active   定义过渡事件段
+v-enter-to    定义过渡的结束状态
+v-leave	定义离开时的过渡状态
+v-leave-active	定义离开时的过渡状态
+v-leave-to：	定义离开完成时的状态
+v-click
+
+第三方类库：
+animate.css
+钩子函数
+
+
+8、交互 axios
+axios
+定义：基于promise的http请求库，支持浏览器端和nodejs
+特性：
+在浏览器端创建的是XMLhttpRequst请求
+在node中创建的是http请求
+支持PromiseAPI
+支持拦请求和响应
+转换数据及响应
+取消请求响应
+vue-resource  vue1.0  无人维护
+安装：
+npm install axios --save
+在mac中下载  brew install axios --save
+brower install axios --save
+
+全局默认
+Axios.defaults.baseURL：设置全局默认路径
+拦截器
+
+取消请求
+
+
+
+9、路由	vue-router
+
+路由组件传参：
+字符串
+布尔	true	路由设置  props:true	开通传递参数的权限
+对象	{name:"qew"}	静态
+props	props:(route)=>{
+	return {
+		id:route.query.动态的属性
+	}
+
+
+a.导航守卫	      钩子函数
+全局导航守卫
+   全局前置导航守卫：router.beforeEach()
+   全局后置守卫：router.afterEach()
+   2.5版本出现的全局解析守卫--router.beforeResole()
+组件内部守卫
+   beforeRouteEnter()
+   beforeRouteEnter()
+   beforeRouteLeave()
+路由独享守卫
+   beforeEnter()
+
+10、vuex	状态管理模式
+定义：Vuex 是一个专为 Vue.js 应用程序开发的状态管理模式。
+
+
+
+
+脚手架
+main.js全局主入口文件
+
+npm install vue-cli -g       2.0版本脚手架
+npm install @vue/cli -g    3.0版本脚手架
+npm uninstall vue-cli -g    卸载脚手架
+npm install @vue/cli-init   兼容2.0和3.0的脚手架
+vue init <tempalte-name> 项目名称
+<tempalte-name>
+webpack   模块打包工具
+webpack-simple  
+browerify    基于浏览器端
+browerify-simple
+pwa	单页
+simple   小轻量
+
+npm run dev	启动项目
+npm start		启动项目
+npm run build	构建(打包)项目
+vue是一个单页面应用
+
+
+
+
+config中的index.js 里的
+assetsSubDirectory：静态资源目录
+assetsPublicPath：静态资源路径
+proxyTable：
+
+
+
+
+nvm	node的版本管理工具
+
+nrm	镜像源管理工具    =>   npm install nrm -g
+npm	包管理工具
+cnpm	淘宝镜像	cnpm install vue-cli -g  缺点：丢包    优点：速度快
+taobao	镜像
+nj
+
+
+
+cache  存在缓存
+npm cache clean -f  清除npm缓存
+
+element-ui=>pc端           mint-ui=>移动端
+
+
+
+html：
+盒模型		选择器			H5和C3中新增属性
+获取地理位置	BFC			C3新增动画，flags
+
+js：
+数据去重	数组操作方法		面向对象
+this指向	闭包			原型原型链
+
+jq：
+ajax		事件委托
+
+node：
+回调		如何操作文件	
+	
+koa：
+
+express：
+如是使用模板引擎	模板引擎有哪些
+
+vue：
+组件传值	路由			vuex
+Axious		双向数据绑定的原理object.definepropety
+声明周期>对应的生命周期有哪些功能
+

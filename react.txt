@@ -1,0 +1,391 @@
+react
+前言
+简介和vue对比
+react的定义
+react的特点
+安装脚手架      create-react-app        webpack搭建脚手架
+组件
+什么是jsx语法
+状态
+设置状态
+jsx运算
+事件（原生js里面的事件  只不过事件名必须采用驼峰模式）
+生就组件
+属性验证
+生命周期
+
+受控组件和非受控组件(自己搞)        有无state
+受控组件{
+    在React中，可变状态通常保存在组件的状态属性中，并且只能使用 setState() 更新，
+    而呈现表单的React组件也控制着在后续用户输入时该表单中发生的情况，
+    以这种由React控制的输入表单元素而改变其值的方式，
+    称为：“受控组件”。
+}
+非受控组件{
+    表单数据由DOM本身处理。即不受setState()的控制，与传统的HTML表单输入相似，
+    input输入值即显示最新值（使用 ref 从DOM获取表单值）
+}
+    
+
+路由
+redux
+
+
+
+前言：
+掌握的技术点:{
+    javascript
+    npm{
+        nvm(node版本管理工具)
+        nrm(镜像源管理工具){
+            cnpm    taobao(缺点：会造成丢包)
+        }
+    }
+}
+
+
+react简介和vue对比？
+react ==》 Facebook(开发)
+定义:      围绕视图进行操作
+    构建用户界面的javascript库
+对比:
+    什么项目该用react？
+    大型项目首推react
+
+react特点:{
+    生态强大
+    上手简单
+    社区强大
+}
+vue特点:{
+    组件化
+    mvvm
+    双向数据绑定    v-model
+    生态旺盛
+    上手简单
+}
+
+发展趋势:
+1、reactjs         负责构建用户界面
+2、reactNative     App开发
+3、reactVR         虚拟现实
+
+react环境搭建   
+下载node
+安装脚手架      create-react-app
+命令    npm install create-react-app -g
+创建项目    create-react-app 项目名称
+
+
+安装过程出错
+JSON exten   near
+需清理缓存  npm cache clean -f
+
+proxy   出现为代理问题
+npm config set proxy null
+
+
+目录结构
+node_modules   =>    项目依赖
+
+public         =>    公共文件，里面放置的是一些公共的css 和 js
+    favicon.ico      网络图标
+    index.html       项目主要入口文件
+    manifest.json
+
+src            =>    主要的代码编写问价
+    App.css
+    App.js     =>    组件模块
+    App.test.js
+    index.css  =>    项目主入口的css
+    index.js   =>    项目主入口
+
+.gitgnore      =>    git选择性上传配置文件
+package.json   =>    项目依赖包
+README.md      =>    项目说明
+
+
+组件:
+    在index.js{
+        import React from 'react'
+        import ReactDOM from 'react-dom'
+        import App from './App'
+        // 网index.html中渲染内容
+        //render    数据    模板
+        ReactDOM.render(<App></App>,document.getElementById("root"))
+    }
+    在App.js中{
+        /* eslint-disable no-useless-constructor */
+        import React from 'react'
+        //App 组件
+        class App extends React.Component {
+            constructor() {
+                //继承
+                super()
+            }
+            //渲染节点
+            render() {
+                // 渲染jsx(dom)节点
+                return ( <div> test </div>) 
+                }
+            }
+            //抛出App组件，供其他文件使用
+            export default App
+    }
+
+什么是jsx语法？
+jsx就是javascript和xml的结合体，react发明这种语法，便于react使用虚拟DOM
+当遇到 < 就会当作是js去解析   <==>就会把jsx当作html去解析
+当遇到 { 则会当作是js去执行
+
+例：<ul className="list">
+        <li>react</li>
+        <li>vue</li>
+    </ul>
+var child1 = react.CreateElement("li",null,"react")
+var child2 = react.CreateElement("li",null,"vue")
+react.CreateElement("ul",{"className":"list"},child1,child2)
+
+jsx和组件的区别
+组件的首字母大写，jsx首字母必须小写
+
+状态:
+state
+在组件中设置(在构造函数里设置)
+this.state={
+    变量名：变量值
+}
+设置状态
+this.setstate({
+    变量名：新的变量值
+})
+
+事件：
+onClick  onMouseover ...
+注意：
+1、事件必须以驼峰写法
+2、必须绑定this，否则this为undefined
+    绑定this的方法
+        a、箭头函数
+            handelClick = () => {}
+        b、bind绑定
+            {this.handlerclick.bind(this)}
+
+
+jsx运算:
+    三目运算:{a?"react":"vue"}
+    普通运算:{1+1}
+
+
+深究组件:
+    绑定类名    className
+    注释       {/*  注释内容  */}
+    通信{
+        父子    props
+        子父    callback / 自定义事件   先在父组件定义回调函数(callback),然后在子组件调用回调函数,
+                                       调用方法this.props.callback(参数),
+                                       回调函数的参数即为子组件向父组件传递的数据,最后在父组件接受该参数
+        兄弟    eventbus(依赖包 events)
+        跨级(全局)  context(全局上下文){
+            prop-types(包   npm install prop-types)  属性验证    字符串  数字    对象    
+            严格校验传输数据的类型，从而使项目开发更为方便
+
+
+            childContextType    对接受到的属性进行校验  只能定义在定义
+            在顶级公用组件定义传输的数据    相当于vue中的provide inject
+            getChildContext(){
+                return{
+
+                }
+            }
+            在子组件中
+            childContext
+        }
+        
+        状态管理 redux
+        后面两者基本不用
+        订阅    dispatch
+        发布    subsribe
+    }
+
+
+生命周期{
+    什么是生命周期
+    生命周期就是在一定阶段内组件自动调用的执行函数
+
+
+    初始化          init
+        在16.0之后constructor(本质上是构造函数,但可以认为是声明周期中的初始化)
+        constructor初始化state和props
+    挂载   
+        componentWillMount()                定义：组件将要挂载 
+        render()                渲染        定义：只要state和props发生变化就会执行
+        componentDidMount()     挂载完毕    
+    更新
+        shouldComponentUpdate(nextprops,nextstate)   在组件更新之前被调用    
+                                                    作用：减少组件之间不必要的渲染
+            参数：nextprops更新后的属性   nextstate更新后的状态
+            ？？如何减少组件之间不必要的渲染
+
+
+        componentWillUpdate     将要更新
+        componentWillReceiveProps   只能接收到props的值或则props的值发生改变时调用
+        componentDidUpdate      更新完毕
+    卸载
+        componentWillUnmount    组件卸载时被调用
+} 
+
+
+路由  =>   组件之间的跳转
+react   依赖包:  react-router       最原始的路由跳转的包        项目中现在基本不用
+                npm install react-router --save
+                react-router-dom   相比于react-router更轻  性能优化方面更好
+                npm install react-router-dom --save
+vue中:{
+    实例router
+    跳转方式       hash     history=>Brower
+    加载组件    component   路径    path    name    路由名称
+    使用router-link跳转
+}
+react中:
+BrowerRouter  路由跳转模式
+router        加载组件
+    {
+        path  component  exact
+    }
+NavLink       导航
+
+路由拼写错误应该如何跳转
+Switch
+    保证对路由组件的切换
+
+路由重定向
+    Redirect
+
+路由传参
+    静态传参        to='/two/2333'
+    动态传参        to={`/two/${this.state.id}`}    获取 this.props.match.params.定义字段
+
+
+路由的属性和模式
+basename            定义原始的根路径
+forceRefresh(参数)        true false{
+    设置项目
+    当第一次从服务段渲染路由时整体惊醒渲染,请求回来时利用本地缓存进行页面缓存,后续无需再向服务器端请求,从而节约性能
+}      
+
+模式
+    HashRouter(hash)        利用#进行跳转
+    BrowerRouter(history)   利用浏览器端的跳转模式
+    memoryRouter            不存储history,存在内存中,没有前进和后退,地址栏不会发生变化
+    staticRouter            静态路由
+    nativeRouter            再做aoo端使用,一般配合ReactNative
+
+
+
+Prompt{
+    message            弹出的信息
+    when     返回ture和false
+        默认值为true
+        当为true时让Prompt生效;
+        当为false时让Prompt失效
+}
+
+
+redux   状态管理仓库    管理数据和ui视图
+redux-saga      redux-thunks
+npm install redux --save
+store   仓库
+reducer 数据应用
+action  分发状态
+dispatch
+getstate
+substrube   监听应用数据的变化
+辅助函数
+步骤:
+a.下载redux
+    npm install redux --save
+    中间件 redux-sage   redux-thunk
+    升华版的redux:npm install react-redux --save(大致一样，但细节有些不同)
+b.创建一个store文件夹=>index.js
+    import {createStore} from 'redux'
+    创建
+    var store = createStore()
+    extends default store
+c.在store文件夹下创建redux.js
+    import store from './store'
+
+
+
+
+
+搭建脚手架  react cli
+webpack 模块打包(构建)工具
+打包工具分类:{
+    grount          最老的
+    glup              |
+    fis               |         时间往下
+    webpack           | 
+    parcle            ⬇
+}
+
+安装  
+(全局安装)
+npm install webpack -g  3.0之前
+npm install webpack-cli webpack-cli -g  3.0之后
+npm webpakc-dev-server -g
+项目:
+初始化:
+npm init = npm init -y
+(项目中安装)
+npm install webpack webpack-cli --save
+webpack_demo{
+    src  创建文件夹{
+        index.html          全局项目入口文件
+        main.js             入口文件
+    }
+    webpack.config.js   webpack的配置文件{
+        入口        entry
+        出口        output
+        模块        module{
+            style-loader                  创建style标签
+            css-loader                    加载css方式@import
+            less-loader  sass-loader      css预处理器
+            postcss-loader                css后处理器
+            这两个都是包,需要下载到开发环境中
+            npm install style-loader css-loader --save
+            }
+            react   react-dom
+            babel   javascript编辑器
+            babel-core 
+            babel-preset-stage-3          未来版本
+            babel-loader                  把es6转化为es5
+            babel-preset-env              做兼容
+            babel-polyfill                 
+            babel-preset-react            解析react代码
+            babel-preset-es2015
+            webpack-dev-server          
+        插件        plugin
+            打包html
+            配置.babelrc
+            {
+                html-webpack-plugin --save  (包)配置html模板
+            }
+            服务器      devserver{
+                port   端口
+                hot    热启动
+                open   自动打开浏览器
+            }           
+    }
+}
+react 中用的都是ES6规则
+
+dist        打包完成后生成的文件夹
+
+.babelrc     默认为隐藏文件
+
+calss中
+    public      公共的
+    private     私有的
+    static      静态的
+    protected   受保护的

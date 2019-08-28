@@ -1,0 +1,35 @@
+定义：事件轴上控制两个函数的执行次数
+防抖：
+如果一个函数在n秒内执行回调函数，在n秒内的事件段中再次触发，时间会重新计算
+节流：
+在n秒的事件段内，多次触发但是只执行一次
+节流函数示例：
+<div id="app">
+    <input type="text" v-debounce="change">
+</div>
+Vue.directive("debounce",{
+    inserted(el,binding){
+        let timer;
+        el.addEventListener("keydown",()=>{
+            if(timer){
+                clearTimeout(timer)
+            }
+            timer = setTimeout(function(){
+                binding.value()
+            },500)
+        })
+    }
+})
+new Vue({
+// 通过指令让对应的div背景颜色改变
+    el: "#app",
+    data: {
+        num:0
+    },
+    methods:{
+        change(){
+            this.num++
+            console.log(this.num)
+        }
+    }   
+})

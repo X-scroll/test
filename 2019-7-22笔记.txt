@@ -1,0 +1,117 @@
+mongodb   数据库
+
+关系型数据库
+特点：数据严格
+例子：orancle   mysql   sqllite   sqlserver
+
+非关系型数据库
+mongodb  nosql
+
+
+数据库作用：仓库（存取数据）  
+
+
+mongodb：面向文档     和json相似     库（db）与集合（collection）之间的关系
+
+安装：
+启动mongodb
+  启动服务端  mongod --dbpath="d:/MongDB/data"
+  启动客户端 mongo
+
+
+注：所有的带_的组合都为备注翻译的内容
+查看数据库 show dbs
+
+选择数据库：use db_name      有则使用数据库，没有则创建
+查看数据库的集合中的所有数据： db.collection_name.find()
+产看数据库的集合中的单个数据：db.collection_name.findOne()
+向集合中插入数据：db.collection_name.insert({})
+向集合中插入一条数据：db.collection_name.insetOne({})
+向集合中插入多条数据：db.collection_name.insertMany([{},{},{}])
+
+删
+delete
+删除单个集合：db.集合名.deleteOne({})
+删除多个集合：db.集合名.deleteMany({},{})
+remove
+db.集合名.remove({})  删除所有
+db.集合名.remove({"name":18)}  删除指定
+
+增(插入） 
+insert
+db.集合名.insert()
+db.集合名.insertOne()
+db.集合名.insertMany([{},{}])
+save    针对保存文档
+db.集合名.save()          
+
+改（更新）
+update
+db.集合名.update("":""},{$set:{"":""}})
+updateOne()
+updateMany()
+
+$set  修改指定值
+$unset   删除指定字段
+$inc  在原有基础上进行累加
+$pop  删除数组的第一个或则最后一个元素   1最后个    -1第一个   {$pop:{"数组名字":1/-1}}
+$push  向数组添加元素  {$push:{"数组名字":value}}
+$each    通过数组的方式进行累增
+$ne  不等于    
+配合update使用方法：
+db.tyh002.updateMany({"age":{$ne:16}},{$set:{"age":11}})  后面需要配合同级的$set一类的进行使用
+$addToSet   添加
+
+
+查
+find()
+findOne()
+findMany()
+
+db.集合名.find().pretty()   数据格式化
+db.集合名.find().limit(n)    截取前n条数据
+db.集合名.find().skip()      基于参数查找数据   跳过当前去除所有数据
+
+$gt 大于    $gte 大于等于     $lt 小于       $lte 小于等于       $ne 不等于
+$and  与         $or 或       
+
+
+
+
+创建数据库（db）
+1 => use db_name（数据库名字)
+2 => db（查看当前数据库名字）
+3 => db.db_name.insert({"name":"田悦豪"})   (向指定数据库中插入数据)
+注：mongodb默认数据库为test，如果在插入之前没有创建数据库，系统将默认选择test数据库
+
+删除数据库
+1 => use db_name  (选择要删除的数据库）
+2 => db.dropDatabase()  (删除数据库）
+
+创建集合
+do.createCollection("name",option)   
+
+name:需要创建集合的名字  
+
+option：可选，指定内存大小及索引的选项
+
+option参数： 
+  capped  布尔型   可选）如果为 true，则创建固定集合。固定集合是指有着固定大小的集合，当达到最大值时，它会自动覆盖最早的文档。
+当该值为 true 时，必须指定 size 参数。
+
+  autoIndexId  布尔型   （可选）如为 true，自动在 _id 字段创建索引。默认为 false。
+
+  size  数值型   （可选）为固定集合指定一个最大值（以字节计）。如果 capped 为 true，也需要指定该字段。
+
+  max  数值型   （可选）指定固定集合中包含文档的最大数量。
+若要设置多项格式为：  db.reateCollection("name",{capped : true, autoIndexId : true, size : 614800, max : 10000})
+
+1 => use db_name  (选择要删除的数据库）
+2 => db.createCollection("collection_name")  (数组名字）
+
+删除集合
+1 => use db_name  (选择要删除的数据库）
+2 => db.collection_name.drop()  (数组名字）
+在MongoDB中，当你插入一些文档时，MongDB会自动创建集合
+
+	

@@ -1,0 +1,25 @@
+koa 
+基于express封装     不足1000行
+定义：基于node开发的下一代web开发框架
+特点：简洁  优雅  体积小
+
+项目初始化
+npm init
+下载koa
+npm install koa --save
+npm install koa-bodyparser --save         处理POST请求
+
+
+路由
+app.use(router.router())()     加载路由引用
+app.use(router.allowedMethods())     处理异常请求
+
+静态资源   koa-static
+模板引擎   koa-view
+cookies     ctx.cookies.set(name,value,[option])    option=>origin  httponly   signed
+ctx.cookies.get(name)
+
+
+
+egg.js   类似于mvc偏向于后端    m=>model    v=>view   c=>contrikker
+
